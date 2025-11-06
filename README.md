@@ -1,0 +1,1 @@
+# StdioMCPServer-template
