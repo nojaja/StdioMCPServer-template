@@ -1,0 +1,67 @@
+{
+  "name": "StdioMCPServer-template",
+  "displayName": "StdioMCPServer-template",
+  "description": "A template for creating Stdio MCP Servers for Model Context Protocol (MCP) to enable AI-assisted coding with tools like GitHub Copilot and others.",
+  "version": "0.1.0",
+  "publisher": "nojaja",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nojaja/StdioMCPServer-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nojaja/StdioMCPServer-template/issues"
+  },
+  "homepage": "https://github.com/nojaja/StdioMCPServer-template#readme",
+  "keywords": [
+    "mcp",
+    "model context protocol",
+    "copilot",
+    "collaboration"
+  ],
+  "engines": {
+    "node": ">=22.5"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "bin": {
+    "StdioMCPServer": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "npm run build:server && npm run docs && npx depcruise src --output-type dot > ./docs/dependency-cruiser.dot",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:ts": "tsc -p ./",
+    "test": "npm run test:unit",
+    "test:unit": "npm run lint && jest --config=jest.config.js --coverage",
+    "test:e2e": "jest --config=jest.e2e.config.js --runInBand",
+    "lint": "eslint . --ext .ts && npx depcruise src",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "start-server-dev": "node ./out/mcpServer/index.js",
+    "start-extension-dev": "code --extensionDevelopmentPath=.",
+    "docs": "typedoc --options typedoc.json"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.11.0",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "dependency-cruiser": "^16.10.4",
+    "eslint": "^9.37.0",
+    "eslint-plugin-jsdoc": "^50.8.0",
+    "eslint-plugin-sonarjs": "^3.0.5",
+    "jest": "^29.6.1",
+    "ts-jest": "^29.1.0",
+    "ts-loader": "^9.4.4",
+    "typedoc": "^0.28.14",
+    "typedoc-plugin-markdown": "^4.3.0",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.46.0"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "uuid": "^9.0.1"
+  }
+}
