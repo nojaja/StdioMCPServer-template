@@ -1,4 +1,5 @@
 import type { Tool } from './Tool';
+import { Logger } from '../Logger';
 
 /**
  * 処理名: ToolRegistry クラス
@@ -49,7 +50,7 @@ export class ToolRegistry {
             }
         } catch (err) {
             // 初期化失敗はログに記録するが、登録自体は継続
-            console.error('[ToolRegistry] tool.init failed for', tool.name, err);
+            Logger.error('[ToolRegistry] tool.init failed for', tool.name, err);
         }
         return tool;
     }

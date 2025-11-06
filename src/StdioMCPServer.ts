@@ -1,4 +1,5 @@
 import { ToolRegistry } from "./toolmng/ToolRegistry";
+import { Logger } from './Logger';
 
 interface JsonRpcRequest {
     jsonrpc: string;
@@ -71,7 +72,7 @@ export class StdioMCPServer {
                     const message = JSON.parse(line.trim());
                     this.handleMessage(message);
                 } catch (error) {
-                    console.error('[MCP Server] Failed to parse message:', error);
+                    Logger.error('[MCP Server] Failed to parse message:', error);
                 }
             }
         });
@@ -79,18 +80,18 @@ export class StdioMCPServer {
         process.stdin.on('end', () => {
             // 処理概要: stdin の終了を受けてプロセスを終了する
             // 実装理由: 親プロセス側の入力が終了した場合、サーバ側もクリーンに終了する必要があるため
-            console.error('[MCP Server] Stdin ended, exiting...');
+            Logger.info('[MCP Server] Stdin ended, exiting...');
             process.exit(0);
         });
 
         // Handle process termination
         process.on('SIGINT', () => {
-            console.error('[MCP Server] Received SIGINT, exiting...');
+            Logger.info('[MCP Server] Received SIGINT, exiting...');
             process.exit(0);
         });
         process.on('SIGTERM', () => {
-            console.error('[MCP Server] Received SIGTERM, exiting...');
-            process.exit(0)
+            Logger.info('[MCP Server] Received SIGTERM, exiting...');
+            process.exit(0);
         });
     }
 
@@ -102,7 +103,7 @@ export class StdioMCPServer {
      */
     private async handleMessage(message: JsonRpcRequest | JsonRpcNotification) {
         try {
-            console.error(`[MCP Server] Received: ${message.method}`, message.params);
+            Logger.info(`[MCP Server] Received: ${message.method}`, message.params);
 
             // id プロパティの有無でリクエスト/通知を判定
             // 処理概要: リクエストはレスポンスを返す必要があるため handleRequest を呼び、通知は handleNotification に委譲する
@@ -240,7 +241,7 @@ export class StdioMCPServer {
         const { method } = notification;
         // 処理概要: 通知を受けてログに記録する（軽量な受け流し実装）
         // 実装理由: 通知の多数到着や非同期イベントを簡潔に扱うため、現状はログに残すだけにする
-        console.error(`[MCP Server] Notification received: ${method}`);
+        Logger.info(`[MCP Server] Notification received: ${method}`);
         return;
     }
 
@@ -253,7 +254,7 @@ export class StdioMCPServer {
     public sendNotification(notification: JsonRpcNotification) {
         const notificationStr = JSON.stringify(notification);
         const debuggingStr = JSON.stringify(notification, null, 2); // for easier debugging
-        console.error(`[MCP Server] Notification Sending: ${debuggingStr}`);
+        Logger.info(`[MCP Server] Notification Sending: ${debuggingStr}`);
         process.stdout.write(notificationStr + '\n');
     }
 
@@ -276,19 +277,19 @@ export class StdioMCPServer {
                 // If the content is a JSON string, try to parse it and pretty-print.
                 try {
                     const parsed = JSON.parse(contentText);
-                    console.error(`[MCP Server] Response content (parsed): ${JSON.stringify(parsed, null, 2)}`);
+                    Logger.info(`[MCP Server] Response content (parsed): ${JSON.stringify(parsed, null, 2)}`);
                 } catch (err) {
                     // Not valid JSON — print raw text
-                    console.error(`[MCP Server] Response content (raw): ${contentText}`);
+                    Logger.info(`[MCP Server] Response content (raw): ${contentText}`);
                 }
             } else {
                 // Fallback: print the whole response for debugging
-                console.error(`[MCP Server] Sending: ${debuggingStr}`);
+                Logger.info(`[MCP Server] Sending: ${debuggingStr}`);
             }
         } catch (err) {
             // Defensive: if any unexpected error occurs while extracting, log it and fall back
-            console.error('[MCP Server] Failed to extract response content:', err);
-            console.error(`[MCP Server] Sending: ${debuggingStr}`);
+            Logger.error('[MCP Server] Failed to extract response content:', err);
+            Logger.error(`[MCP Server] Sending: ${debuggingStr}`);
         }
 
         process.stdout.write(responseStr + '\n');
