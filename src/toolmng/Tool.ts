@@ -17,10 +17,17 @@ export type ToolMeta = {
  * 実装理由: 共通のライフサイクルとインターフェースを規定することで、ToolRegistry 等から一貫した扱いが可能になり、テストや拡張が容易になります。
  */
 export abstract class Tool {
+    /** ツール名（識別子） */
     public abstract name: string;
+    /** ツールタイトル（表示用） */
     public abstract title?: string | undefined;
+    /** ツール説明 */
     public abstract description: string;
+    /** CLIでのコマンドに利用 */
+    public abstract command?: string | undefined;
+    /** 入力スキーマ json-schema.orgに準拠、type、descriptionは必須、必要に応じてrequiredも設定すること*/
     public abstract inputSchema: object;
+    /** 出力スキーマ json-schema.orgに準拠、type、descriptionは必須 */
     public abstract outputSchema?: object | undefined;
 
     /**

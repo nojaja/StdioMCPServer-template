@@ -5,14 +5,21 @@ import { Tool } from '../toolmng/Tool';
  * @class
  */
 export class SampleTool extends Tool {
+    /** ツール名（識別子） */
     public name = 'sample';
+    /** ツールタイトル（表示用） */
     public title = 'Sample Tool';
+    /** ツール説明 */
     public description = 'mcp sample';
+    /** CLIでのコマンドに利用 */
     public command = 'sample';
+    /** 入力スキーマ json-schema.orgに準拠、type、descriptionは必須、必要に応じてrequiredも設定すること*/
     public inputSchema = {
         type: 'object',
-        properties: {}
+        properties: {param1: { type: 'string', description: 'sampleText' }},
+        required: ['param1']
     };
+    /** 出力スキーマ json-schema.orgに準拠、type、descriptionは必須 */
     public outputSchema = {
         type: 'object',
         properties: {}

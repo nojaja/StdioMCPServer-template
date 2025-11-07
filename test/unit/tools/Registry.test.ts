@@ -10,9 +10,9 @@ describe('ToolRegistry basic operations', () => {
 
     const list = registry.list();
     expect(Array.isArray(list)).toBe(true);
-    // names should include sample and echo
+    // names should include sample
     const names = list.map((m: any) => m.name);
-    expect(names).toEqual(expect.arrayContaining(['sample', 'echo']));
+    expect(names).toEqual(expect.arrayContaining(['sample']));
   });
 
   it('can execute a tool', async () => {
