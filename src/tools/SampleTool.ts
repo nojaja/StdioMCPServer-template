@@ -16,8 +16,8 @@ export class SampleTool extends Tool {
     /** 入力スキーマ json-schema.orgに準拠、type、descriptionは必須、必要に応じてrequiredも設定すること*/
     public inputSchema = {
         type: 'object',
-        properties: {param1: { type: 'string', description: 'sampleText' }},
-        required: ['param1']
+        properties: {text: { type: 'string', description: 'sampleText' }},
+        required: ['text']
     };
     /** 出力スキーマ json-schema.orgに準拠、type、descriptionは必須 */
     public outputSchema = {

@@ -1,6 +1,5 @@
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { EventEmitter } from 'events';
-import * as path from 'path';
 
 export type SpawnOptions = {
     // absolute or project-relative path to node executable or script

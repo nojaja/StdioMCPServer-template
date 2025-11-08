@@ -16,7 +16,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/test/jest.setup.js'],
   coverageThreshold: {
-    global: {
+    global: {//変更禁止
       branches: 80,
       functions: 80,
       lines: 80,

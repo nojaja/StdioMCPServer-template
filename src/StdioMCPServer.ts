@@ -1,5 +1,5 @@
 import { ToolRegistry } from "./toolmng/ToolRegistry";
-import { Logger } from './Logger';
+import { Logger } from './util/Logger';
 
 interface JsonRpcRequest {
     jsonrpc: string;

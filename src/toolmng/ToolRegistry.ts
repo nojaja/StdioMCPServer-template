@@ -1,5 +1,5 @@
 import type { Tool } from './Tool';
-import { Logger } from '../Logger';
+import { Logger } from '../util/Logger';
 
 /**
  * 処理名: ToolRegistry クラス

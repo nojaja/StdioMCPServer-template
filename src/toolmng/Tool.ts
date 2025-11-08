@@ -7,6 +7,7 @@ export type ToolMeta = {
     name: string;
     description?: string;
     title?: string;
+    command?: string;
     inputSchema?: any;
     outputSchema?: any;
 };
@@ -72,7 +73,9 @@ export abstract class Tool {
             name: this.name, 
             title: this.title ? this.title : this.name,
             description: this.description,
-            inputSchema: this.inputSchema
+            command: this.command,
+            inputSchema: this.inputSchema,
+            outputSchema: this.outputSchema
         }
     }
 }

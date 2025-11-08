@@ -13,11 +13,11 @@ if (!process.env.SHOW_CONSOLE_ERRORS) {
 }
 
 // ensure built-in tools are registered before tests run
-// require() ‚ğg‚Á‚Ä“¯Šú“I‚Éƒ[ƒh‚·‚éiJest ‚Ì ESM İ’è‚É‚æ‚Á‚Ä“®“I import ‚ª¸”s‚·‚é‚½‚ßj
+// require() ã‚’ä½¿ã£ã¦åŒæœŸçš„ã«ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ï¼ˆJest ã® ESM è¨­å®šã«ã‚ˆã£ã¦å‹•çš„ import ãŒå¤±æ•—ã™ã‚‹ãŸã‚ï¼‰
 try {
   // require TypeScript module via Jest's transformer (ts-jest) by omitting extension
   require('../src/tools/index');
 } catch (e) {
-  // –³‹: ƒeƒXƒgŠÂ‹«‚É‚æ‚Á‚Ä‚Í ESM ‚Ì‰ğŒˆ‚ªˆÙ‚È‚é‚½‚ßAƒeƒXƒg“à‚ÅŒÂ•Ê‚É“o˜^‚³‚ê‚é‚±‚Æ‚ğ‘z’è
-  // ƒRƒ“ƒ\[ƒ‹‚ğo—Í‚µ‚È‚¢•ûj‚Ì‚½‚ßA‚»‚Ì‚Ü‚Üi‚ß‚é
+  // ç„¡è¦–: ãƒ†ã‚¹ãƒˆç’°å¢ƒã«ã‚ˆã£ã¦ã¯ ESM ã®è§£æ±ºãŒç•°ãªã‚‹ãŸã‚ã€ãƒ†ã‚¹ãƒˆå†…ã§å€‹åˆ¥ã«ç™»éŒ²ã•ã‚Œã‚‹ã“ã¨ã‚’æƒ³å®š
+  // ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’å‡ºåŠ›ã—ãªã„æ–¹é‡ã®ãŸã‚ã€ãã®ã¾ã¾é€²ã‚ã‚‹
 }
