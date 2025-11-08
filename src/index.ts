@@ -139,7 +139,7 @@ function registerCommandForMeta(meta: any, program: Command, toolRegistry: ToolR
             // commander の仕様で最後の引数が Command オブジェクト / options となる
             const opts = args[args.length - 1] || {};
             try {
-                const result = await toolRegistry.execute(meta.name as string, opts);
+                const result = await toolRegistry.execute(meta.name as string, opts.opts());
                 ResultUtil.printResult(result);
             } catch (e) {
                 Logger.error('[MCP Server] Tool execution failed:', e);

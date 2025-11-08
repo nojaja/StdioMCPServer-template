@@ -22,14 +22,35 @@ export class ResultUtil {
      * @returns {any}
      */
     public static extractOutputFromResult(result: any) {
-        if (result && Array.isArray(result.content)) {
-            const textItem = result.content.find((c: any) => c && c.type === 'text' && typeof c.text === 'string');
-            if (textItem && textItem.text) {
-                const parsed = this.parseJsonSafely(textItem.text);
-                return parsed.ok ? parsed.value : parsed.value;
-            }
-        }
-        return result;
+        if (!(result && Array.isArray(result.content))) return result;
+
+        // まず error を優先して探す
+        const errMsg = this.extractErrorMessageFromContent(result.content);
+        if (errMsg) return errMsg;
+
+    // 次に json タイプがあればその json を返す
+    const jsonItem = result.content.find((c: any) => c && c.type === 'json' && c.json !== undefined);
+    if (jsonItem) return jsonItem.json;
+
+        // 次に最初の text を探して JSON をパースして返す
+        const textItem = result.content.find((c: any) => c && c.type === 'text' && typeof c.text === 'string');
+        if (!textItem) return result;
+        return this.parseJsonSafely(textItem.text).value;
+    }
+
+    /**
+     * content 配列から error を探して整形された文字列を返す
+     * 見つからなければ undefined を返す
+     * @param {any[]} content
+     * @returns {string|undefined}
+     */
+    private static extractErrorMessageFromContent(content: any[]): string | undefined {
+        if (!Array.isArray(content)) return undefined;
+        const err = content.find((c: any) => c && c.type === 'error' && c.error && typeof c.error.message === 'string');
+        if (!err) return undefined;
+        const message = err.error.message;
+        const code = err.error.code;
+        return typeof code === 'string' && code.length > 0 ? `${message} (${code})` : message;
     }
 
     /**
